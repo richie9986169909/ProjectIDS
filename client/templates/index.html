@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %} Home|Graphs {% endblock %} {% block
+content %}
+
+<style>
+  body {
+    background-image: url("/static/images/bg5.jpg");
+    background-size: cover;
+    height: 100%;
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+  }
+
+  .title_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .client_table {
+    padding-top: 20px;
+    width: 70%;
+    margin: auto;
+    height: 75vh;
+    margin-top: 1.5vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(15.3px);
+    -webkit-backdrop-filter: blur(15.3px);
+    border: 1px solid rgba(255, 255, 255, 0.49);
+  }
+
+  .btn {
+    font-weight: bold;
+  }
+</style>
+<body>
+  {% if a_t %}
+  <div class="client_table" style="">
+    <div class="title_container">
+      <h2 class="table_title">{{ a_t }}</h2>
+      <a href="/clear_data"><button class="btn">{{ aidb }}</button></a>
+    </div>
+
+    <table class="table table-center">
+      {% if cols %}
+      <tr>
+        {% for col in cols %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+      <tbody>
+        {% for value in values %}
+        <tr>
+          {% for i in value %}
+          <td>{{ i }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+
+      {% endif %}
+    </table>
+  </div>
+  {% endif %} {% if d_t %}
+  <div class="client_table" style="">
+    <div class="title_container">
+      <h2 class="table_title">{{ d_t }}</h2>
+      <a href="/clear_block_data"><button class="btn">{{ bidb }}</button></a>
+    </div>
+
+    <table class="table table-center">
+      {% if cols %}
+      <tr>
+        {% for col in cols %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+      <tbody>
+        {% for value in values %}
+        <tr>
+          {% for i in value %}
+          <td>{{ i }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+
+      {% endif %}
+    </table>
+  </div>
+
+  {% endif %}
+
+  <script>
+    // JavaScript to handle form submission event
+    document
+      .querySelector("#form_load")
+      .addEventListener("submit", function (event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Show loader when the form is submitted
+        let loader = document.querySelector("#load");
+        loader.style.display = "block";
+
+        // Submit the form programmatically after showing the loader
+        // This ensures that the loader is displayed before the form submission
+        document.querySelector("#form_load").submit();
+      });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var msgElement = document.getElementById("msg");
+      if (msgElement) {
+        // Show the message
+        msgElement.classList.remove("hidden");
+
+        // Set a timeout to hide the message after 10 seconds
+        setTimeout(function () {
+          msgElement.classList.add("hidden");
+        }, 10000); // 10 seconds in milliseconds
+      }
+    });
+  </script>
+</body>
+{% endblock %}
