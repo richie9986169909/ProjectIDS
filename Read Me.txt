@@ -1,0 +1,1 @@
+Due to 50MB restriction, only a subset of CICIDS2017 data has been uploaded.
